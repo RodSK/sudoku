@@ -9,6 +9,7 @@
         android:id="@+id/new_game"
         style="@style/button_Main"
         android:onClick="new_game"
+        android:background="@color/bronze"
         android:text="@string/new_game" />
 
     <Button

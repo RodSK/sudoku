@@ -13,6 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.BoringLayout;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -33,7 +34,7 @@ public class GameActivity extends AppCompatActivity {
     public String level = "easy";
     GameFieldFragment gameFragment;
     public TextView gameBar;
-    public String gameState;
+    public String gameState = "keep";
     private SQLiteDatabase db;
     private Cursor cursor;
 
@@ -43,6 +44,14 @@ public class GameActivity extends AppCompatActivity {
 
         this.getSupportActionBar().hide();
 
+        Intent intent = getIntent();
+        if(intent.getStringExtra(EXTRA_MESSAGE) != null){
+            level = intent.getStringExtra(EXTRA_MESSAGE);
+        }
+        if(intent.getStringExtra(GAME_STATE) != null){
+            gameState = intent.getStringExtra(GAME_STATE);
+        }
+
         gameFragment = new GameFieldFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.add(R.id.fragment_container, gameFragment)
@@ -51,24 +60,18 @@ public class GameActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_game);
 
+        gameBar = this.findViewById(R.id.gameBar);
+
         SQLiteOpenHelper SudokuDatabase = new SudokuDatabase(this);
         db = SudokuDatabase.getWritableDatabase();
 
-        Intent intent = getIntent();
-        if(intent.getStringExtra(EXTRA_MESSAGE) != null){
-            level = intent.getStringExtra(EXTRA_MESSAGE);
-        }
-        if(intent.getStringExtra(GAME_STATE) != null){
-            gameState = intent.getStringExtra(GAME_STATE);
-        }
-        gameBar = this.findViewById(R.id.gameBar);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if(gameState != null){
-            runGame(gameState);
+        if(gameState.equals("delete")){
+            new Thread (runnableDeleteData).start();
         }
     }
 
@@ -118,6 +121,15 @@ public class GameActivity extends AppCompatActivity {
         runGame(t);
     }
 
+    public void runOldGame(){
+        cursor = db.query ("GAME", new String[] {"ID"}, "FINISHED = ?", new String[] {"false"}, null, null, "ID DESC");
+        if(cursor.moveToFirst()){
+            runGame(cursor.getString(0));
+        }else{
+            finish();
+        }
+    }
+
     public void runGame(String id){
         cursor = db.query ("GAME", new String[] {"ID", "LIST", "LISTC", "SCORE", "LEVEL"}, "ID = ?", new String[] {id}, null, null, null);
         if(cursor.moveToFirst()) {
@@ -131,7 +143,16 @@ public class GameActivity extends AppCompatActivity {
             gameFragment.tiles = cursor.getString(1).split(",");
             gameFragment.score = cursor.getInt(3);
             level = cursor.getString(4);
+            Log.v("test", intList + " | ");
+            Log.v("test", cursor.getString(1).split(",")[0] + " | ");
+            Log.v("test", cursor.getString(1).split(",")[1] + " | ");
         }
+    }
+
+    public void finishGame(){
+        db.delete("GAME", "FINISHED = ?", new String[] {"false"});
+        dbInsert(true);
+        finish();
     }
 
     public void displayCheckpoints(){
@@ -174,31 +195,43 @@ public class GameActivity extends AppCompatActivity {
                 .commit();
     }
 
-    private Runnable runnableSaveData = new Runnable () {
+    private Runnable runnableDeleteData = new Runnable() {
+        @Override
         public void run() {
-
-            String dataTiles = "";
-            String dataTilesComputer = "";
-
-            for(int i=0; i<gameFragment.tiles.length; i++){
-                dataTiles += gameFragment.tiles[i] + ",";
-            }
-
-            Iterator<Integer> iter = gameFragment.tilesComputer.iterator();
-            while(iter.hasNext()){
-                dataTilesComputer += iter.next() + ",";
-            }
-
-            ContentValues values = new ContentValues();
-            values.put("LIST", dataTiles);
-            values.put("LISTC", dataTilesComputer);
-            values.put("SCORE", gameFragment.score);
-            values.put("LEVEL", level);
-            values.put("FINISHED", "false");
-            db.insert("GAME", null, values);
-
-            //Log.v("test", gameFragment.score + " ");
+            db.delete("GAME", "FINISHED = ?", new String[] {"false"});
         }
     };
+
+    private Runnable runnableSaveData = new Runnable () {
+        public void run() {
+            dbInsert(false);
+        }
+    };
+
+    private void dbInsert(Boolean finish){
+        String dataTiles = "";
+        String dataTilesComputer = "";
+
+        for(int i=0; i<gameFragment.tiles.length; i++){
+            dataTiles += gameFragment.tiles[i] + ",";
+        }
+
+        Iterator<Integer> iter = gameFragment.tilesComputer.iterator();
+        while(iter.hasNext()){
+            dataTilesComputer += iter.next() + ",";
+        }
+
+        ContentValues values = new ContentValues();
+        values.put("LIST", dataTiles);
+        values.put("LISTC", dataTilesComputer);
+        values.put("SCORE", gameFragment.score);
+        values.put("LEVEL", level);
+        if(finish){
+            values.put("FINISHED", "true");
+        }else{
+            values.put("FINISHED", "false");
+        }
+        db.insert("GAME", null, values);
+    }
 
 }

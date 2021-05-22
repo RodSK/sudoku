@@ -65,12 +65,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void continue_game(View view){
-        cursor = db.query ("GAME", new String[] {"ID"}, "FINISHED = ?", new String[] {"false"}, null, null, null);
-        if(cursor.moveToFirst()){
-            Intent intent = new Intent(this, GameActivity.class);
-            intent.putExtra("game_state", Integer.toString(cursor.getInt(0)));
-            startActivity(intent);
-        }
+        Intent intent = new Intent(this, GameActivity.class);
+        intent.putExtra("game_state", "old");
+        startActivity(intent);
     }
 
     public void scores_game(View view){

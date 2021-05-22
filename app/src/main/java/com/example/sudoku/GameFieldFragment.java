@@ -41,6 +41,12 @@ public class GameFieldFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        if(((GameActivity) getActivity()).gameState.equals("old")){
+            ((GameActivity) getActivity()).runOldGame();
+            first = false;
+            ((GameActivity) getActivity()).gameState = "keep";
+        }
+
         updateTitle();
 
         View view = inflater.inflate(R.layout.fragment_game_field, container, false);
@@ -59,6 +65,7 @@ public class GameFieldFragment extends Fragment {
         gridView.setAdapter(adapter);
 
         if (first) {
+            ((GameActivity) getActivity()).gameState = "delete";
             gameStart();
         }
 
@@ -72,6 +79,11 @@ public class GameFieldFragment extends Fragment {
                     oldPosition = position;
                 }else{
                     currentPosition = -1;
+                    Iterator<Integer> iter = tilesComputer.iterator();
+                    while(iter.hasNext()){
+                        cell = (TextView) gridView.getChildAt(iter.next());
+                        cell.setBackgroundColor(Color.parseColor("#C0C0C0"));
+                    }
                 }
             }
         });
@@ -102,6 +114,10 @@ public class GameFieldFragment extends Fragment {
             ((ArrayAdapter) gridView.getAdapter()).notifyDataSetChanged();
             setTileWhite(currentPosition);
             currentPosition = -1;
+            if(gameCheck()){
+                Toast.makeText(getActivity(), "You Won", Toast.LENGTH_LONG).show();
+
+            }
         }
     }
 
@@ -131,7 +147,7 @@ public class GameFieldFragment extends Fragment {
 
     private void setTileGreen(int p) {
         cell = (TextView) gridView.getChildAt(p);
-        cell.setBackgroundColor(Color.parseColor("#00FF00"));;
+        cell.setBackgroundColor(Color.parseColor("#00FF00"));
     }
 
     private  void updateTitle(){
@@ -139,24 +155,29 @@ public class GameFieldFragment extends Fragment {
     }
 
     public Boolean gameCheck(){
-        for(int r=0; r<=72; r+=9){
-            for(int c=r+1; c<r+9; c++){
-                if(tiles[r].equals(" ") || tiles[c].equals(" ")){
-                    return false;
+        for(int i=0; i<9; i++){
+            for(int a=i; a<i+72; a+=9){
+                for(int b=a+9; b<=i+72; b+=9){
+                    if(tiles[a].equals(" ") || tiles[a].equals(tiles[b])){
+                        return false;
+                    }
                 }
             }
         }
 
-        for(int c=0; c<9; c++){
-            for(int r=c+9; r<=72; r+=9){
-                if(tiles[c].equals(" ") || tiles[r].equals(" ")){
-                    return false;
+        for(int i=0; i<=72; i+=9){
+            for(int a=i; a<i+8; a++){
+                for(int b=a+1; b<=i+8; b++){
+                    if(tiles[a].equals(" ") || tiles[a].equals(tiles[b])){
+                        return false;
+                    }
                 }
             }
         }
 
         return true;
     }
+
 
     private void initGame(int lvl){
         int givenNumbers = lvl;
