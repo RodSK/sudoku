@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/easy_level"
+        style="@style/button_Main"
+        android:onClick="selectLevel"
+        android:tag="easy"
+        android:text="@string/easy_level" />
+
+    <Button
+        android:id="@+id/medium_level"
+        style="@style/button_Main"
+        android:onClick="selectLevel"
+        android:tag="medium"
+        android:text="@string/medium_level" />
+
+    <Button
+        android:id="@+id/hard_level"
+        style="@style/button_Main"
+        android:onClick="selectLevel"
+        android:tag="hard"
+        android:text="@string/hard_level" />
+
+</LinearLayout>

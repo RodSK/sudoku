@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="10">
+
+    <Button
+        android:id="@+id/button1"
+        style="@style/button_game_field"
+        android:text="@string/menu_game_field"
+        android:onClick="goMenu"/>
+
+    <Button
+        android:id="@+id/button2"
+        style="@style/button2_game_field"
+        android:text="@string/save_game_field"
+        android:onClick="saveCheckpoint"/>
+
+    <Button
+        android:id="@+id/button3"
+        style="@style/button_game_field"
+        android:text="@string/checkpoints_game_field"
+        android:onClick="seeCheckpoints"/>
+
+</TableRow>
+
+    <GridView
+        android:id="@+id/gridView1"
+        android:layout_width="match_parent"
+        android:layout_height="392dp"
+        android:background="@android:color/holo_blue_light"
+        android:gravity="center"
+        android:horizontalSpacing="5dp"
+        android:numColumns="9"
+        android:padding="5dp"
+        android:verticalSpacing="5dp">
+
+    </GridView>
+
+<TableRow
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:weightSum="9">
+
+    <Button
+        android:id="@+id/button1c"
+        style="@style/control_game_field"
+        android:onClick="selectNumber"
+        android:text="1" />
+
+    <Button
+        android:id="@+id/button2c"
+        style="@style/control_game_field"
+        android:onClick="selectNumber"
+        android:text="2" />
+
+    <Button
+        android:id="@+id/button3c"
+        style="@style/control_game_field"
+        android:onClick="selectNumber"
+        android:text="3" />
+
+    <Button
+        android:id="@+id/button4c"
+        style="@style/control_game_field"
+        android:onClick="selectNumber"
+        android:text="4" />
+
+    <Button
+        android:id="@+id/button5c"
+        style="@style/control_game_field"
+        android:onClick="selectNumber"
+        android:text="5" />
+
+    <Button
+        android:id="@+id/button6c"
+        style="@style/control_game_field"
+        android:onClick="selectNumber"
+        android:text="6" />
+
+    <Button
+        android:id="@+id/button7c"
+        style="@style/control_game_field"
+        android:onClick="selectNumber"
+        android:text="7" />
+
+    <Button
+        android:id="@+id/button8c"
+        style="@style/control_game_field"
+        android:onClick="selectNumber"
+        android:text="8" />
+
+    <Button
+        android:id="@+id/button9c"
+        style="@style/control_game_field"
+        android:onClick="selectNumber"
+        android:text="9" />
+
+</TableRow>
+
+    <Button
+        android:id="@+id/delete"
+        style="@style/control2_game_field"
+        android:onClick="deleteNumber"
+        android:text="@string/delete_game_field" />
+
+
+</LinearLayout>

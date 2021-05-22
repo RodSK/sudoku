@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <Button
+        android:id="@+id/new_game"
+        style="@style/button_Main"
+        android:onClick="new_game"
+        android:text="@string/new_game" />
+
+    <Button
+        android:id="@+id/continue_game"
+        style="@style/button_Main"
+        android:onClick="continue_game"
+        android:text="@string/continue_game" />
+
+    <Button
+        android:id="@+id/scores_game"
+        style="@style/button_Main"
+        android:onClick="scores_game"
+        android:text="@string/scores_game" />
+
+    <Button
+        android:id="@+id/rules_game"
+        style="@style/button_Main"
+        android:onClick="rules_game"
+        android:text="@string/rules_game" />
+
+    <Button
+        android:id="@+id/exit_game"
+        style="@style/button_Main"
+        android:onClick="exit_game"
+        android:text="@string/exit_game" />
+
+</LinearLayout>

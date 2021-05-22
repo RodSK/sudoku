@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/checkPoint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:padding="20dp"
+        android:text="@string/checkpoint" />
+
+    <Button
+        android:id="@+id/check1"
+        style="@style/checkPoint"
+        android:onClick="useCheckpoint"
+        android:text="" />
+
+    <Button
+        android:id="@+id/check2"
+        style="@style/checkPoint"
+        android:onClick="useCheckpoint"
+        android:text="" />
+
+    <Button
+        android:id="@+id/check3"
+        style="@style/checkPoint"
+        android:onClick="useCheckpoint"
+        android:text="" />
+
+    <Button
+        android:id="@+id/check4"
+        style="@style/checkPoint"
+        android:onClick="useCheckpoint"
+        android:text="" />
+
+    <Button
+        android:id="@+id/check5"
+        style="@style/checkPoint"
+        android:onClick="useCheckpoint"
+        android:text="" />
+
+</LinearLayout>

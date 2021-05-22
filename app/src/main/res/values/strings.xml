@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Sudoku</string>
+    <string name="new_game">New Game</string>
+    <string name="continue_game">Continue Game</string>
+    <string name="scores_game">Scores</string>
+    <string name="rules_game">Rules</string>
+    <string name="exit_game">Exit</string>
+    <string name="easy_level">Easy</string>
+    <string name="medium_level">Medium</string>
+    <string name="hard_level">Hard</string>
+    <string name="menu_game_field">Menu</string>
+    <string name="save_game_field">Checkpoint</string>
+    <string name="checkpoints_game_field">|||</string>
+    <string name="put_game_field">Set Number</string>
+    <string name="delete_game_field">Delete</string>
+    <string name="winners">Winning Pedestal</string>
+    <string name="checkpoint">5 Saved Checkpoints</string>
+    <string name="rules">Player gets 1 point for inserting number in cell, and loses 1 point for deleting or changing number in the cell. Player can create 5 check-points and then go back to them.
+</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
